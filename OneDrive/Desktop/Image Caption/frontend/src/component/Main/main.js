@@ -29,10 +29,32 @@ const Main = () => {
   };
 
   const handleGenerateCaption = () => {
-    // Simulate caption generation (replace with actual logic)
     const generatedCaption = "This is a sample caption."; // Replace with actual generated caption
     setImageCaption(generatedCaption);
     setCaptionGenerated(true);
+
+    const data = {
+      caption: generatedCaption,
+    };
+
+    const Backend_url =
+      process.env.REACT_APP_BACKEND_PORT || "http://localhost:8080";
+    fetch(`${Backend_url}/generate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set the content type as JSON
+      },
+      body: JSON.stringify(data), // Convert the data to JSON format
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        // Handle a successful response here if needed
+      })
+      .catch((error) => {
+        console.error("There was a problem with the POST request:", error);
+      });
   };
 
   return (

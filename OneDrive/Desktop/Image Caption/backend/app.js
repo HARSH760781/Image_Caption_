@@ -21,7 +21,7 @@ mongoose.connect(
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => {
-  //console.log("Connected to MongoDB");
+  console.log("Connected to MongoDB");
 });
 
 app.get("/", (req, res) => {
@@ -102,7 +102,9 @@ app.get("/like/count", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
+app.post("/generate", (req, res) => {
+  console.log(req.body);
+});
 app.post("/like", verifyToken, async (req, res) => {
   try {
     const userId = req.body.userId; // This is the authenticated user's ID
